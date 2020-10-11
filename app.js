@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 // require database connection
 const dbConnect = require("./db/dbConnect");
 const User = require("./db/userModel");
+const auth = require("./auth");
 
 // execute database connection
 dbConnect();
@@ -113,6 +114,16 @@ app.post("/login", (request, response) => {
         e,
       });
     });
+});
+
+// free endpoint
+app.get("/free-endpoint", (request, response) => {
+  response.json({ message: "You are free to access me anytime" });
+});
+
+// authentication endpoint
+app.get("/auth-endpoint", auth, (request, response) => {
+  response.send({ message: "You are authorized to access me" });
 });
 
 module.exports = app;
